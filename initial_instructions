@@ -1,0 +1,109 @@
+/* 
+1- utilizar o mysql no terminal/prompt, deve entrar na pasta onde está instalado
+cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+2- para acessar o sistema do mysql, deve utilizar o comando
+mysql -u root -p
+
+-u: informa que será indicado o usuário
+root: usuário "administrador"
+-p: informa que será indicado a password
+
+3- logo após, digitar a senha para acesar o sistema;
+
+ COMANDOS BÁSICOS
+
+show databases; = mostra todos os DB existentes;
+create database biblioteca; = cria o DB "biblioteca"
+use biblioteca; = entra no DB "bilbioteca"
+
+show tables; = mostra todas as tabelas criadas no DB;
+create table cliente (
+idcliente int primary key auto_increment,
+nome varchar (30) not null,
+sexo enum('M','F') not null,
+email varchar (50) unique;
+cpf varchar (15) unique;
+);
+
+LEGENDA
+int = variavel inteiro;
+primary key = identifica que este atributo é do tipo chave primária;
+auto_increment = indica que toda vez que for inserido uma nova linha na tabela, será feito ++;
+enum = enumera opções especificas a serem preenchidas;
+char(30) = ja reserva o espaço de 30 caracteres;
+varchar(30) = reserva até 30 caracteres, dependendo de cada caso;
+not null = não pode ser vazio;
+unique = não deixa a mesma informação em dois cadastros diferentes;
+
+
+desc tabela; = mostrar atributos da tabela
+
+ */
+
+
+
+create database biblioteca;
+show databases;
+use biblioteca;
+show tables;
+
+create table leitores (
+    idLeitores int primary key auto_increment,
+    nome varchar(30) not null,
+    idade int (3) not null,
+    cpf varchar (15) unique
+);
+
+desc table leitores;
+
+
+create table telefonesLeitores (
+    idTelefonesLeitores int primary key auto_increment,
+    tipoTelefone enum ('F','C') not null,
+    numero varchar(20) unique
+);
+
+desc table telefonesleitores;
+
+create table enderecoLeitores (
+    idEnderecosLeitores int primary key auto_increment,
+    rua varchar (30) not null,
+    bairro varchar (20) not null,
+    cidade varchar (20) not null,
+    ufEstado char (2) not null,
+    siglaPais char (2) not null
+);
+
+create table instituicao (
+    idInstituicao int primary key auto_increment,
+    tipoInstituicao enum ('se','si','fa') not table
+);
+
+create table bibliotecas (
+    idBiblioteca int primary key auto_increment,
+    nomeBiblioteca varchar (30)
+);
+
+create table enderecoBibliotecas (
+    idEnderecoBibliotecas int primary key auto_increment,
+    cidade varchar (20) not null,
+    ufEstado char (2) not null,
+);
+
+create table materiais (
+    idMateriais int primary key auto_increment,
+    tipoMaterial varchar (20) not null,
+);
+
+create table livros (
+    idLivros int primary key auto_increment,
+    tipoLivro enum ('L','E') not null, 
+    nomeLivro varchar (20) not null, 
+    nomeAutor varchar (20) not null,
+    edicao varchar (10) not null,
+    editora varchar (20) not null,
+    anoPublicado int (4) not null,
+    genero varchar (20) not null,
+    locado enum ('S','N') not null
+);
