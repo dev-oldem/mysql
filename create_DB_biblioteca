@@ -1,0 +1,64 @@
+create database biblioteca;
+show databases;
+use biblioteca;
+show tables;
+
+create table leitores (
+    idLeitores int primary key auto_increment,
+    nome varchar(30) not null,
+    idade int (3) not null,
+    cpf varchar (15) unique
+);
+
+desc table leitores;
+
+
+create table telefonesLeitores (
+    idTelefonesLeitores int primary key auto_increment,
+    tipoTelefone enum ('F','C') not null,
+    numero varchar(20) unique
+);
+
+desc table telefonesleitores;
+
+create table enderecoLeitores (
+    idEnderecosLeitores int primary key auto_increment,
+    rua varchar (30) not null,
+    bairro varchar (20) not null,
+    cidade varchar (20) not null,
+    ufEstado char (2) not null,
+    siglaPais char (2) not null
+);
+
+create table instituicao (
+    idInstituicao int primary key auto_increment,
+    tipoInstituicao enum ('se','si','fa') not table
+);
+
+create table bibliotecas (
+    idBiblioteca int primary key auto_increment,
+    nomeBiblioteca varchar (30)
+);
+
+create table enderecoBibliotecas (
+    idEnderecoBibliotecas int primary key auto_increment,
+    cidade varchar (20) not null,
+    ufEstado char (2) not null,
+);
+
+create table materiais (
+    idMateriais int primary key auto_increment,
+    tipoMaterial varchar (20) not null,
+);
+
+create table livros (
+    idLivros int primary key auto_increment,
+    tipoLivro enum ('L','E') not null, 
+    nomeLivro varchar (20) not null, 
+    nomeAutor varchar (20) not null,
+    edicao varchar (10) not null,
+    editora varchar (20) not null,
+    anoPublicado int (4) not null,
+    genero varchar (20) not null,
+    locado enum ('S','N') not null
+);
