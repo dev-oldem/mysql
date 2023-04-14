@@ -22,8 +22,8 @@ create table cliente (
 idcliente int primary key auto_increment,
 nome varchar (30) not null,
 sexo enum('M','F') not null,
-email varchar (50) unique;
-cpf varchar (15) unique;
+email varchar (50) unique,
+cpf varchar (15) unique,
 );
 
 LEGENDA
@@ -40,6 +40,39 @@ unique = não deixa a mesma informação em dois cadastros diferentes;
 desc 'tabela ; = mostrar atributos da tabela
 select 'conteudo' from 'atributo' = mostra todas as linhas do atributo informado, onde conteudo refere-se a coluna - se utilizar * no 'conteudo' irá mostrar todo 
 conteudo de todas as as colunas
+
+quanto se tem uma relação 1 x n, deve ser colocada as fk na tabela mais distante da tabela principal, conforme exemplo abaixo:
+create table usuario (
+idcliente int primary key auto_increment,
+nome varchar (30) not null,
+sexo enum('M','F') not null,
+idade int(3) not null,
+email varchar (50) unique,
+cpf varchar (15) unique,
+area_formacao varchar(30),
+);
+
+create table endereco (
+idendereco int primary key auto_increment,
+rua varchar (30) not null,
+bairro varchar (30) not null,
+cidade varchar (30) not null,
+uf_estado char (2) not null,
+fkcliente int unique,
+foreign key (fkcliente) references cliente(idcliente)
+);
+
+
+quando se tem uma relacao n x n, deve ser criado uma tabela exclusiva para as fk, igual exemplo abaixo:
+create table relacao_virus_remedio (
+    dosagem varchar (10),
+    fkvirus int,
+    fkremedio int,
+    foreign key (fkvirus) references virus(idvirus),
+    foreign key (fkremedio) references remedio(idremedio),
+);
+
+
 ===============================================
  */
 
