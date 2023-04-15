@@ -1,0 +1,128 @@
+/*SELEÇÃO PROJEÇÃO E JUNÇÃO
+
+PROJEÇÃO: É TUDO QUE VOCÊ QUER VER NA TELA. 
+Quando solicitam uma Query, na verdade desejam ver algo em tela. E a projeção tem o objetivo de projetar/contruir.
+*/
+
+select tipo, numero from telefone;
+
+/*Projetando uma coluna, que traz data e hora*/
+
+
+select now(); /* projeta as informações de datae hora do banco*/
+select now () as data_hora; /*cria o apelido 'data_hora' para o now()*/
+select data_hora();
+
+
+
+/*Criar Banco de Dados*/
+create database livraria;
+
+use livraria; /*acessa a tabela livraria*/
+
+/*CRIANDO A TABELA SESSAO*/
+  CREATE TABLE SESSAO (
+  IDSESSAO INT AUTO_INCREMENT PRIMARY KEY,
+  localizador VARCHAR(8) NOT NULL,
+  genero VARCHAR(35) NOT NULL,
+  qtd_prateleiras int(2)
+);  
+
+CREATE TABLE livros (
+  idlivros INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  autor VARCHAR(255) NOT NULL,
+  editora VARCHAR(255),
+  ano_publicacao INT,
+  ID_SESSAO INT,
+  FOREIGN KEY(ID_SESSAO) REFERENCES SESSAO(IDSESSAO)
+);
+
+/* Mostrar Tabela*/
+show tables;
+
+/*mostrar atributos da tabela*/
+desc livros;
+
+/*SELECT = tem a função de projetar na tela as informações da tabela*/
+select * from livros; /* neste caso ele projeta todos os dados de todas as colunas (*) ta tabela 'livros'*/
+
+/*Preenchendo a tabela*/
+INSERT INTO SESSAO (localizador, genero, qtd_prateleiras) 
+VALUES
+('C1','LIT_ROMANCE'   ,3),
+('C2','TEC_SISTEMAS'  ,4),
+('C3','ENSMED_EXATAS' ,2),
+('C4','LIT_CRITICA'   ,3),
+('C5','ENSMED_HUMANAS',4),
+('C6','TEC_MECANICA'  ,4),
+('C7','TEC_ELETRICA'  ,4),
+('C8','TEC_MONTAGEMEMANUTENCAO',3),
+('C9','TEC_MODA',2),
+('C10','ENSMED_BIOLOGICAS',3),
+('C11','LIT_CLASSICA',3);
+
+/*SELECT = tem a função de projetar na tela as informações da tabela*/
+select * from SESSAO;
+
+/*Preenchendo a tabela*/
+INSERT INTO livros (titulo, autor, editora, ano_publicacao,id_sessao) 
+VALUES
+('O Senhor dos Anéis', 'J. R. R. Tolkien', 'Editora A', 1954,1), /*deveser usar 'texto' nas varchar e char*/
+('A Guerra dos Tronos', 'George R. R. Martin', 'Editora B', 1996,1),
+('1984', 'George Orwell', 'Editora C', 1949,2),
+('O Pequeno Príncipe', 'Antoine de Saint-Exupéry', 'Editora D', 1943,2),
+('A Insustentável Leveza do Ser', 'Milan Kundera', 'Editora E', 1984,2),
+('Anna Karenina', 'Lev Tolstói', NULL, 1877,3),
+('Crime e Castigo', 'Fiódor Dostoiévski', NULL, 1866,3),
+('O Sol é para Todos', 'Harper Lee', 'Editora F', 1960,4),
+('A Revolução dos Bichos', 'George Orwell', NULL, 1945,4),
+('O Conde de Monte Cristo', 'Alexandre Dumas', NULL, 1844,5);
+
+
+select * from livros; /* neste caso ele projeta todos os dados de todas as colunas (*) ta tabela 'livros'*/
+
+ /*Fazer uma soma*/
+ select 2+2 as soma;
+ 
+ /*SOMA + TITULO(LIVROS) + DATA*/
+ select 2+2 as SOMA, TITULO, NOW() AS HORA from livros;
+ 
+ /*SELECIONANDO CAMPOS DA TABELA LIVROS*/
+ select titulo,autor, ano_publicacao from livros;
+ 
+/*SELEÇÃO
+trazer subconjuntos de um conjunto maior [where]*/
+
+/* TROUXEMOS da tabela livros, apenas os que estao na sessao de ID = 2;*/
+select titulo, autor,ano_publicacao
+from livros
+where id_sessao = 2;
+
+/* TROUXEMOS da tabela livros, apenas os que estao na sessao de ID MAIORES que 2;*/
+select titulo, autor,ano_publicacao   
+from livros							  
+where id_sessao > 2;				  
+
+/*ALTERANDO CAMPOS COM ALIAS*/
+select titulo as NOME_DO_LIVRO, autor as AUTORIA, ano_publicacao AS ANO_DE_PUBLI, id_sessao
+from livros
+where id_sessao >= 3;
+
+
+/*UTILIZANDO OPERADORES LOGICOS[AND]*/
+select titulo,autor,idlivros
+from livros
+where idlivros > 2
+and idlivros < 8;
+
+select distinct titulo, autor, ano_publicacao, localizador /* o distinct faz com que remova os dados duplicados da projeção*/
+from livros,sessao
+where localizador = 'C1';
+
+/*JUNÇÃO*/
+//*TRAZER APENAS OS CAMPOS QUE POSSUEM vALORES DE ID's IGUAIS*/
+select titulo, autor, id_sessao,idsessao, genero
+from livros
+inner join sessao
+on idsessao = Id_sessao;
